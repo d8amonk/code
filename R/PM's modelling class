@@ -1,0 +1,55 @@
+
+CDOT long term revenue model -
+Current year is always AU
+Green changes to blue (ROW 1 = year) at the train/test horizon
+When you add a year of observed data, the forecast overrides that predicted value
+
+LRTP = Long Range Travel Plan
+
+with authority, one can rescind, transfer, or set objectives.
+FHWA is a simulation of budget with an obligation limit, closing budget, federal program dips, etc.
+- check "ob limit" row40
+
+OUTPUT = (SAP Upload)
+
+All movels report out to the Solver(C) tab
+
+Est of OLS params in on the VMT State(O)
+*VMT should be a "4-step model from planner"
+
+all 12 sheets run calcs, pump to solver, solver pumps out to graphs
+THE SOLVER SHEET IS WHERE WE CAN MANIPULATE THE COEFFICIENTS.  
+
+
+- 2014 tab
+Energy Star standards in the 90s
+LEEDs certification in 00s
+Hybrid vehicles
+*Higher FC, lower VC -> adoption rate of newer tech
+
+Assumptions Annual (C) lets you play with policy parameters (Col:~AO)
+- MPG; tax rates - changes 1) goes back through VMT estimator of price elasticity of fuel, new vehicle purchases,
+
+Solver(C) contains the coefficient values and their constraint fields.
+
+"CFO Ben Stein (and Cory Drummer)" sheet = SCENARIOS
+
+To change the time window being ingested into the model, VMT$AE:39
+
+
+day 2
+
+model is based on the premise that the performance of past contracts can better predict the NEXT contract than CDOT or anyone else.
+
+data are munged and assembled in the CO Payout Data wb, then those active and inactive contracts are pumped into the CO Total Forecast Solver (similar to day 1's)
+
+PM: "you are estimating the statistical distribution of partial derivatives."
+
+JV: "they are confusing building a better speedometer with building a faster car."
+
+The Colorado Construction Cost Index is on row 58 of The CO Payout Total Forecast
+- price inflation of supplier inputs
+
+ACTIVE means that a contract was let, awarded, and a PAYMENT HAS BEEN MADE
+
+The forecasting tool was originally built to schdule advanced construction.  "It has been perverted from its original intent." It's important to consider the assumptions that went into the original modelling process.  

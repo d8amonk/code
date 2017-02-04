@@ -1,0 +1,118 @@
+library(xml2)
+library(htmltools)
+library(rvest)
+library(dplyr)
+library(sunburstR)
+
+url <- "http://www.rolltide.com/services/responsive-roster-bio.ashx?type=stats&rp_id=3153&path=football&year=2016&player_id=0"
+ridley <- read_html(url)
+
+# 
+games <- ridley %>%
+  html_node('table') %>%
+  html_nodes('tbody tr th') %>%
+  html_text()
+
+run_yards <- ridley %>%
+  html_node('table') %>%
+  html_nodes('td:nth-child(4)') %>%
+  html_text() %>%
+  purrr::map_dbl(as.numeric)
+
+pass_yards <- ridley %>%
+  html_node('table') %>%
+  html_nodes('td:nth-child(8)') %>%
+  html_text() %>%
+  purrr::map_dbl(as.numeric)
+
+ridley_df <- data.frame(
+  game = games,
+  run = run_yards[-length(run_yards)],
+  pass = pass_yards[-length(pass_yards)],
+  stringsAsFactors = FALSE
+) %>%
+  tidyr::gather(type, value, -game)
+
+(
+sb <- ridley_df %>%
+  mutate(path = paste(type, game, sep="-")) %>%
+  select(path,value) %>%
+  sunburstR::sunburst(percent=TRUE, count=TRUE)
+)
+
+# now build the e2d3 dot-bar chart
+#  see https://github.com/timelyportfolio/e2d3R/blob/master/prototype.R
+e2d3 <- htmlDependency(
+  name = "e2d3",
+  version = "0.6.4",
+  src = c(href = "https://cdn.rawgit.com/timelyportfolio/e2d3/master/dist/lib"),
+  script = "e2d3.js"
+)
+
+# make a function for now as convenience
+#   to allow R data.frame in proper format
+#   but eventually rewrite e2-dot-bar with arguments
+#   to allow other column names for the hierarchy
+e2d3_dot_builder <- function(data = NULL) {
+  browsable(
+    attachDependencies(
+      tagList(
+        tags$div(
+          id = "chart"
+        ),
+        tags$script(HTML(
+          sprintf(
+            "
+            var root = document.getElementById('chart');
+            var data = '%s';
+            %s
+            var dim = { width: 600, height: 400 };
+            var margin = { top: 30, bottom: 50, left: 50, right: 20 };
+            var inputHeight = 20;
+            var numberFormat = d3.format('.0f');
+            dim.graphWidth = dim.width - margin.left - margin.right;
+            dim.graphHeight = dim.height - margin.top - margin.bottom;
+            require(['e2d3model'],function(model){
+            var rows = d3.csv.parseRows(data);
+            update(new model.ChartDataTable(rows));
+            })
+            ",
+            paste0(
+              capture.output(write.csv(data, row.names=FALSE)),
+              collapse="\\n"
+            ),
+            paste0(
+              readLines("C:\\Users\\jvangeete\\Google Drive\\Code\\R\\d3js\\dot-bar-chart\\d3.min.js"),
+              collapse="\n"
+            )
+          )
+        ))
+    ),
+    list(e2d3)
+  )
+  )
+}
+
+e2db <- ridley_df %>%
+  tidyr::spread(type, value) %>%
+  mutate(Year = game) %>%
+  select(Year,everything()) %>%
+  select(-game) %>%
+  e2d3_dot_builder()
+
+
+browsable(
+  tagList(
+    tags$h1(
+      "University of Alabama | ",
+      tags$a(
+        href="http://www.rolltide.com/roster.aspx?rp_id=556",
+        "Calvin Ridley"
+      )
+    ),
+    tags$h3("Sunburst from sunburstR"),
+    sb,
+    tags$h3("e2d3 Dot Bar Chart"),
+    e2db
+  )
+)

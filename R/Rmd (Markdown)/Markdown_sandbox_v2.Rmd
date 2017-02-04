@@ -1,0 +1,13 @@
+---
+title: "Untitled"
+author: "Jeff van Geete"
+date: "Tuesday, April 28, 2015"
+output: html_document
+---
+```{r, eval = c(-1, -3), tidy = TRUE, echo = TRUE}
+1+1
+2+2
+3+3
+```
+
+There were `r 1+1` payments studied.

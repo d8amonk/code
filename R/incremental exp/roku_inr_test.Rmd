@@ -1,0 +1,99 @@
+---
+title: "Roku Incrementality Test"
+author: 
+date: 
+output:
+  pdf_document:
+    toc: no
+    includes:
+            in_header: header.tex
+geometry: margin = .5in
+fontsize: 16pt
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE, results = 'hide'}
+library(ggplot2, quietly = F, warn.conflicts = F)
+library(scales, quietly = F, warn.conflicts = F)
+library(lubridate, quietly = F, warn.conflicts = F)
+library(ggthemes, quietly = F, warn.conflicts = F)
+library(gridExtra, quietly = F, warn.conflicts = F)
+
+options(scipen = 999, digits = 8)
+# knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, results = 'hide')
+
+# source
+source("\\\\fileserver\\company\\DA&DS\\Data Scientists Only\\R Code\\roku_incr_test.R")
+incrementality(d)
+```
+
+###Roku Incrementality Test for `r today()`
+```{r, echo = FALSE, fig.width = 3, fig.align = 'left'}
+knitr::kable(out_table[1:40,], digits = getOption("digits"))
+```
+
+\blandscape
+```{r, echo = FALSE, fig.height = 5, fig.width = 9, fig.align = 'center'}
+graph
+cat("                      The maximal frequency (where lower-bound of Roku <= upper-bound of Tracfone) is: ", maximal_frequency, " impressions.")
+```
+\elandscape
+
+\blandscape
+```{r, echo = FALSE, fig.height = 9, fig.width = 9, fig.align = 'center'}
+grid.arrange(
+  ggplot(out_diff, aes(Freq, Mean_diff)) + 
+    geom_line() + xlab("") + 
+    ylab("Diff(Roku, TF)Roku") + 
+    geom_hline(yintercept = 0, lty = 2, col = 'red', lwd = 2) +
+    ggtitle("Difference and Incremental Effect of Roku v. TF (baseline) CR"),
+  ggplot(out_diff, aes(Freq, Ratio)) + 
+    geom_line() + xlab("Frequency") + 
+    ylab("Ratio of Diff(Roku, TF) :: Roku") + 
+    geom_hline(yintercept = 0, lty = 2, col = 'red', lwd = 2),
+  nrow = 2
+)
+```
+\elandscape
+
+\blandscape
+```{r, echo = FALSE, fig.height = 9, fig.width = 9, fig.align = 'center'}
+grid.arrange(
+  ggplot(out_diff, aes(x = Mean_diff)) + 
+    geom_density() +
+    # geom_histogram(binwidth = 0.05) + 
+    geom_density(color = 'black', fill = 'red', alpha = 0.6, adjust = 1/5) +  #
+    # ylab("Count of Freq Bin w/ x-Given Difference in Means") +
+    ylab("") +
+    xlab("Percentage-Point Difference in p.Conversion (Roku - TF)") +
+    # scale_x_continuous(breaks = round(0.05*-10:20, 3)) +
+    theme_tufte() +
+    theme(axis.text.y = element_blank(), axis.ticks = element_blank()) +
+    ggtitle("Distribution of Diff(p.Roku, p.TF)"),
+  ggplot(out_diff, aes(x = Ratio)) + 
+    geom_density() +
+    # geom_histogram(binwidth = 0.05) + 
+    geom_density(color = 'black', fill = 'red', alpha = 0.6, adjust = 1/5) +  #
+    # ylab("Count of Freq Bin w/ x-Given Difference in Means") +
+    ylab("") +
+    xlab("Ratio = Percentage-Point Diff(p.Roku - p.TF)/p.Roku") +
+    # scale_x_continuous(breaks = round(0.05*-10:20, 3)) +
+    theme_tufte() +
+    theme(axis.text.y = element_blank(), axis.ticks = element_blank()) +
+    ggtitle("Distribution of Ratio[Diff(p.Roku, p.TF)/p.Roku]"),
+  nrow = 2
+)
+```
+\elandscape
+
+\newpage
+```{r, echo = FALSE, fig.height = 5, fig.width = 5, fig.align = 'center'}
+lapply(
+    # if there are two grouping dims, spitting by X will create Y (within) tests 
+    split(df_ten, df_ten$Freq), 
+    function(x) {
+      plot(bayes.prop.test(x$Success, x$Trials, n.iter = 1000))
+      cat("                      Group 1: Roku -- Group 2: Tracfone -- for Frequency:", x$Freq[1]) 
+      }
+    )
+ 
+```

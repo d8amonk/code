@@ -1,0 +1,110 @@
+
+---
+title: "PMO Brief - Mike "
+author: "Jeff van Geete"
+date: "May 4th, 2015"
+output:
+  rmarkdown::tufte_handout
+---
+
+# Introduction
+This PDF is a form of publication based on Edward Tufte's \LaTeX\ [^tufte_latex] document classes. Tufte's style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography.  
+  
+\newthought{A}s CDOT begins to explore its large (and growing) volume of data, it will become increasingly important to have portable, reproducible research in the form of these interactive notebooks.  
+  
+# Key Findings
+Images and graphics play an integral role in our analysis, and will be used as the primary means of displaying results.
+
+```{r, echo = FALSE, output = FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(forecast)
+library(knitr)
+
+options(scipen = 6)
+knit_hooks$set(inline = function(x) {
+  prettyNum(x, big.mark=",", scientific = F)})
+
+setwd("c:/Users/vangeetej/Google Drive/CDOT/Data/On Deck/") 
+raw <- tbl_dt(read.csv("Expenditure_byPayment_00to14_wRegions.csv"))
+raw$Date <- as.Date(raw$Date, format="%m/%d/%Y")
+```
+
+\newthought{H}ere, we can see `r nrow(raw)` payments made between 2000 and 2014.
+
+```{r, echo = TRUE, output = TRUE, fig.margin = TRUE, fig.cap = "All Construction Payments on Contracts, July 2000 - December 2014", tidy = F}
+glimpse(raw)
+ggplot(raw, aes(x = Date, y = Amount)) + 
+  geom_line(color = year(raw$Date))
+```
+
+Note the use of the `aes(x,y)` option to map the graph's aesthetics to the features in our data. For example, **$ Date** is mapped to the **x-axis** and **$ Amount** is mapped to the **y-axis**. 
+
+![Count Densities by Year](C:\Users\vangeetej\Google Drive\CDOT\Graphics\density_count_byY.jpeg)
+
+\begin{marginfigure}
+\caption{This illustration shows how the count of monthly payments is distributed, by the uniquely colored years' density distributions. For example, 2011's grey distribution shows the highest number of monthly payments was around 105. Note that no two years are the same.}
+\end{marginfigure}
+
+## Full Width Figures
+
+You can arrange for figures to span across the entire page by using the `fig.fullwidth` chunk option. 
+
+```{r, fig.width = 10, fig.height = 2, fig.fullwidth = TRUE, fig.cap = "Full width figure"}
+qplot(wt, mpg, data=mtcars, colour=factor(cyl))
+```
+
+Note the use of the `fig.width` and `fig.height` chunk options to establish the proportions of the figure. Full width figures look much better if their height is minimized.
+
+![Payment Amount Densities by Year](C:\Users\vangeetej\Google Drive\CDOT\Graphics\fiscal_densities.jpeg)
+\begin{marginfigure}
+\caption{BLAH BLAH BLAH.}
+\end{marginfigure}
+## Main Column Figures
+
+Besides margin and full width figures, you can of course also include figures constrained to the main column.
+
+```{r, fig.cap = "Another figure"}
+qplot(factor(cyl), mpg, data = mtcars, geom = "boxplot")
+```
+
+![Box and Whisker]()
+
+
+# Sidenotes
+
+One of the most prominent and distinctive features of this style is the extensive use of sidenotes. There is a wide margin to provide ample room for sidenotes and small figures. Any use of a footnote will automatically be converted to a sidenote. ^[This is a sidenote that was entered using a footnote.] 
+
+If you'd like to place ancillary information in the margin without the sidenote mark (the superscript number), you can use the `\marginnote` command. \marginnote{This is a margin note.  Notice that there isn't a number preceding the note.}
+
+Note also that the two footnote references (`tufte_latex` and `books_be`, both defined below) were also included in the margin on the first page of this document.
+
+# Tables
+
+You can use the **xtable** package to format \LaTeX\ tables that integrate well with the rest of the Tufte handout style. Note that it's important to set the `xtable.comment` and `xtable.booktabs` options as shown below to ensure the table is formatted correctly for inclusion in the document.
+
+```{r, results='asis'}
+library(xtable)
+options(xtable.comment = FALSE)
+options(xtable.booktabs = TRUE)
+xtable(head(mtcars[,1:6]), caption = "First rows of mtcars")
+```
+
+```javascript, 
+var s = "JavaScript syntax highlighting";
+alert(s);
+```
+
+[^tufte_latex]: https://code.google.com/p/tufte-latex/
+[^books_be]: http://www.edwardtufte.com/tufte/books_be
+
+
+
+
+
+
+
+
+
+

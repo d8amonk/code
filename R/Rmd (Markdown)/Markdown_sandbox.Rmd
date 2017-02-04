@@ -1,0 +1,31 @@
+---
+title: "PMO Report Test 1"
+author: "Jeff van Geete"
+date: "Tuesday, April 21, 2015"
+output: html_document
+---
+
+Test 1: 100 random, normal rolls of mean 250, standard deviation 100...
+
+```{r}
+x <- rnorm(50, 10, 2.5)
+summary(x)
+```
+
+You can also embed plots, for example:
+
+```{r, echo= TRUE}
+y <- rnorm(100, 65, 3)
+plot(x)
+hist(y)
+```
+
+Looking at a simple ggplot example:
+```{r qplot, fig.width=4, fig.height = 3, message = FALSE}
+#quick summary and plot
+library(ggplot2)
+data(cars)
+summary(cars)
+qplot(speed, dist, data = cars) +
+  geom_smooth()
+```

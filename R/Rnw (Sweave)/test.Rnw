@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\begin{table}[!htbp] \centering 
+  \caption{Summary Statistics} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+\emph{Outcome}: Gear Spend & 446 & 4,133,918 & 11,151,388 & 0 & 164,467,613 \\
+\emph{Predictor}: \% Black  & 397 & 8.42 & 8.4 & 0.3 & 37.9 \\
+\textbf{Violent Crime} & 395 & 18,700.69 & 25,859.7 & 314 & 162,135 \\
+\ \ \ Murder & 395 & 227.89 & 295.89 & 0 & 2,031 \\ 
+\ \ \ Rape & 394 & 1,173.91 & 1,347.86 & 33 & 7,467 \\
+\ \ \ Robbery & 395 & 6,604.7 & 9,827.73 & 38 & 63,403 \\ 
+\ \ \ Assault & 395 & 11,373.61 & 14,838.22 & 241 & 89,234 \\  
+\textbf{Property Crime} & 395 & 133,782.8 & 166,449.5 & 5,739 & 958,963 \\
+\ \ \ Burglary & 395 & 29,183.14 & 37,055.41 & 1,173 & 201,186 \\ 
+\ \ \ Larceny Theft & 395 & 91,938.2 & 109,163.6 & 4,410 & 575,907 \\ 
+\ \ \ Motor Vehicle Theft & 395 & 13,079.15 & 23,472.74 & 156 & 201,770 \\ 
+\ \ \ Arson & 395 & 800.94 & 1,216.93 & 4 & 9,696 \\ 
+\\
+\hline \\[-1.8ex] 
+\multicolumn{6}{c}{\emph{26 controls for wages, hours, income, education, by race will be included. }} \\
+\end{tabular} 
+\end{table} 
+
+
+\end{document}

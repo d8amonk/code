@@ -1,0 +1,36 @@
+---
+title: "thesis_summary_stats"
+author: "Jeff van Geete"
+date: "October 17, 2015"
+output: word_document
+---
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+Year & 405 & 2010 & 2.3 & 2006 & 2013 \\ 
+Population & 405 & 3.8M & 5.2M & 212,243 & 31.7M \\
+Violent Crime & 405 & 19,196 & 25,855 & 314 & 162,135 \\ 
+Murder, NNM & 405 & 225 & 294 & 0 & 2,031 \\ 
+Forcible Rape & 405 & 1,175 & 1,323 & 33 & 7,467 \\ 
+Robbery & 405 & 5,987 & 9,496 & 7 & 63,403 \\ 
+Property Crime & 405 & 118,188 & 161,432 & 241 & 958,963 \\ 
+Burglary & 405 & 40,919 & 72,215 & 1,182 & 869,985 \\ 
+Larceny-Theft & 405 & 83,014 & 105,009 & 1,173 & 575,907 \\ 
+Motor Vehicle Theft & 405 & 22,496 & 49,556 & 169 & 539,803 \\ 
+Arson & 405 & 2,045 & 7,931 & 24 & 139,765 \\ 
+Unemployment & 405 & 6.7\% & 2.3\% & 2.6\% & 13.8\% \\ 
+Gear Sales & 395 & \$4.1M & \$11.6M & \$120 & \$164.5M \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table} 
+
+
+\end{document}

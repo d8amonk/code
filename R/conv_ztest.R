@@ -1,0 +1,7 @@
+set.seed(1)
+imps_1 <- floor(rpois(5000, 1000))
+imps_2 <- rpois(5000, 1200)
+conv_1 <- rbinom(5000, 100, 0.05)
+conv_2 <- rbinom(5000, 200, 0.07)
+cr_1 <- sum(conv_1)/sum(imps_1)
+cr_2 <- sum(conv_2)/sum(imps_2)
