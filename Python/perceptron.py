@@ -68,4 +68,5 @@ import numpy as np
 y = df.iloc[0:100,4].values
 y = np.where(y == 'Iris-Setosa', -1, 1)
 X = df.iloc[0:100, [0,2]].values
-plt.scatter(X[0:50,0], X[0:50, 1], color = 'red', marker = 'o', label = 'setosa')
+# plt.scatter(X[0:50,0], X[0:50, 1], color = 'red', marker = 'o', label = 'setosa')
+# plt.show()
