@@ -21,7 +21,7 @@ class Perceptron(object):
     errors_ : list
         Number of misclassifications in every epoch
 
-    """
+    """ 
 
     def __init__(self, eta = 0.01, n_iter = 10):
         self.eta = eta
@@ -69,4 +69,14 @@ y = df.iloc[0:100,4].values
 y = np.where(y == 'Iris-Setosa', -1, 1)
 X = df.iloc[0:100, [0,2]].values
 # plt.scatter(X[0:50,0], X[0:50, 1], color = 'red', marker = 'o', label = 'setosa')
+# plt.scatter(X[50:100,0], X[50:100, 1], color = 'blue', marker = 'x', label = 'versicolor')
+# plt.xlabel('sepal length')
+# plt.ylabel('pental length')
+# plt.legend(loc = 'upper left')
 # plt.show()
+
+ppn = Perceptron()
+
+
+
+
