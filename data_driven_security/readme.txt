@@ -1,0 +1,1 @@
+This zip contains example code and support files for every chapter of the book except Chapter 1, Chapter 12, and the two appendixes, all of which have no accompanying code or support files. We hope you have fun with the sample code and files we have included and that you find them useful and informative. Enjoy.
