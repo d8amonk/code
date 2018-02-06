@@ -30,7 +30,7 @@ ratings[:5]
 movies[:5]
 
 data=pd.merge(pd.merge(ratings, users), movies)
-data.ix[0]
+data.iloc[0]
 
 mean_ratings=pd.pivot_table(data=data,
                             values='rating',
@@ -45,3 +45,13 @@ active_titles=ratings_by_title.index[ratings_by_title > 250]
 active_mean_ratings = mean_ratings.ix[active_titles]
 top_female_ratings = active_mean_ratings.sort_values(by='F', ascending=False)
 top_female_ratings[:10]
+
+mean_ratings['diff'] = active_mean_ratings['M'] - active_mean_ratings['F']
+sorted_by_diff = mean_ratings.dropna().sort_values(by='diff')
+
+sorted_by_diff[::-1][:15]
+
+ratings_std_by_title = data.groupby('title')['rating'].std()
+ratings_std_by_title = ratings_std_by_title.ix[active_titles]
+ratings_std_by_title.sort_values(ascending=False)[:10]
+
